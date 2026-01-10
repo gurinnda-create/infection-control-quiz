@@ -189,7 +189,7 @@ export default function Home() {
                 <div className="flex justify-center">
                     <button
                         onClick={handleStartRequest}
-                        className="group relative inline-flex items-center justify-center px-8 py-5 text-xl font-bold text-white transition-all duration-200 bg-primary rounded-full hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg hover:shadow-xl hover:-translate-y-1"
+                        className="btn-primary group relative inline-flex items-center justify-center px-8 py-5 text-xl font-bold rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg hover:shadow-xl hover:-translate-y-1"
                     >
                         <span className="mr-3">問題集をスタート</span>
                         <Play className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="currentColor" />

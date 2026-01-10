@@ -33,12 +33,15 @@ const QuizSettings: React.FC<QuizSettingsProps> = ({ onStart, totalQuestionsAvai
                 <div
                     onClick={() => setMode('all')}
                     className={`cursor-pointer group relative p-6 rounded-2xl border-2 transition-all duration-300 ${mode === 'all'
-                            ? 'border-primary bg-primary/5 shadow-lg scale-[1.02]'
-                            : 'border-border bg-card hover:border-primary/50 hover:bg-accent/50'
+                        ? 'border-primary bg-primary/5 shadow-lg scale-[1.02]'
+                        : 'border-border bg-card hover:border-primary/50 hover:bg-accent/50'
                         }`}
                 >
                     <div className="flex items-center space-x-4 mb-4">
-                        <div className={`p-3 rounded-xl ${mode === 'all' ? 'bg-primary text-primary-foreground' : 'bg-accent text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary'}`}>
+                        <div
+                            className={`p-3 rounded-xl ${mode === 'all' ? '' : 'bg-accent text-muted-foreground group-hover:bg-primary/20 group-hover:text-primary'}`}
+                            style={mode === 'all' ? { backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' } : {}}
+                        >
                             <BookOpen size={24} />
                         </div>
                         <h3 className="text-lg font-bold">通常モード</h3>
@@ -54,10 +57,10 @@ const QuizSettings: React.FC<QuizSettingsProps> = ({ onStart, totalQuestionsAvai
                 <div
                     onClick={() => hasIncorrectQuestions && setMode('incorrect')}
                     className={`cursor-pointer group relative p-6 rounded-2xl border-2 transition-all duration-300 ${mode === 'incorrect'
-                            ? 'border-warning bg-warning/5 shadow-lg scale-[1.02]'
-                            : hasIncorrectQuestions
-                                ? 'border-border bg-card hover:border-warning/50 hover:bg-accent/50'
-                                : 'border-border bg-secondary/10 opacity-60 cursor-not-allowed'
+                        ? 'border-warning bg-warning/5 shadow-lg scale-[1.02]'
+                        : hasIncorrectQuestions
+                            ? 'border-border bg-card hover:border-warning/50 hover:bg-accent/50'
+                            : 'border-border bg-secondary/10 opacity-60 cursor-not-allowed'
                         }`}
                 >
                     <div className="flex items-center space-x-4 mb-4">
@@ -93,9 +96,10 @@ const QuizSettings: React.FC<QuizSettingsProps> = ({ onStart, totalQuestionsAvai
                             key={count}
                             onClick={() => setQuestionCount(count)}
                             className={`p-4 rounded-xl font-bold text-lg transition-all duration-200 ${questionCount === count
-                                    ? 'bg-primary text-white shadow-md transform scale-105'
-                                    : 'bg-accent hover:bg-accent/80 text-foreground'
+                                ? 'shadow-md transform scale-105'
+                                : 'bg-accent hover:bg-accent/80 text-foreground'
                                 }`}
+                            style={questionCount === count ? { backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' } : {}}
                         >
                             {count}問
                         </button>
