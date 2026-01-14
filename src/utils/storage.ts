@@ -1,7 +1,5 @@
 "use client";
 
-export type TargetLevel = 'beginner' | 'mid' | 'transfer' | 'all';
-
 export type Question = {
   id: number;
   category: string;
@@ -10,8 +8,6 @@ export type Question = {
   correctAnswerIndex: number;
   explanation: string;
   reference: string;
-  targetLevels?: TargetLevel[];
-  imageUrl?: string;
 };
 
 export type QuizResult = {

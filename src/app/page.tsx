@@ -31,24 +31,12 @@ export default function Home() {
     const handleStartGame = (config: QuizConfig) => {
         let selectedQuestions: Question[] = [];
 
-        // 1. Mode Filtering
         if (config.mode === 'incorrect') {
             const incorrectIds = getIncorrectQuestionsIds();
             selectedQuestions = questionsData.filter(q => incorrectIds.includes(q.id)) as Question[];
-        } else if (config.mode === 'image_only') {
-            selectedQuestions = (questionsData as Question[]).filter(q => q.imageUrl);
         } else {
             // All questions
             selectedQuestions = [...questionsData] as Question[];
-        }
-
-        // 2. Target Level Filtering
-        if (config.targetLevel !== 'all') {
-            selectedQuestions = selectedQuestions.filter(q => {
-                // If question has no specific target level, treat as 'all' (available for everyone)
-                if (!q.targetLevels || q.targetLevels.length === 0) return true;
-                return q.targetLevels.includes(config.targetLevel) || q.targetLevels.includes('all');
-            });
         }
 
         // Shuffle
@@ -57,11 +45,6 @@ export default function Home() {
         // Slice to count
         if (selectedQuestions.length > config.questionCount) {
             selectedQuestions = selectedQuestions.slice(0, config.questionCount);
-        }
-
-        if (selectedQuestions.length === 0) {
-            alert("条件に一致する問題がありませんでした。設定を変更してください。");
-            return;
         }
 
         setGameQuestions(selectedQuestions);
