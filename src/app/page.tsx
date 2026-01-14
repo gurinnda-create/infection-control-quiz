@@ -31,18 +31,27 @@ export default function Home() {
     const handleStartGame = (config: QuizConfig) => {
         let selectedQuestions: Question[] = [];
 
+        // 1. Mode Filtering
         if (config.mode === 'incorrect') {
             const incorrectIds = getIncorrectQuestionsIds();
-            // Filter questionsData by incorrectIds
-            const incorrectQuestions = questionsData.filter(q => incorrectIds.includes(q.id)) as Question[];
-            selectedQuestions = incorrectQuestions;
+            selectedQuestions = questionsData.filter(q => incorrectIds.includes(q.id)) as Question[];
+        } else if (config.mode === 'image_only') {
+            selectedQuestions = (questionsData as Question[]).filter(q => q.imageUrl);
         } else {
             // All questions
             selectedQuestions = [...questionsData] as Question[];
         }
 
-        // Shuffle and slice
-        // Simple shuffle
+        // 2. Target Level Filtering
+        if (config.targetLevel !== 'all') {
+            selectedQuestions = selectedQuestions.filter(q => {
+                // If question has no specific target level, treat as 'all' (available for everyone)
+                if (!q.targetLevels || q.targetLevels.length === 0) return true;
+                return q.targetLevels.includes(config.targetLevel) || q.targetLevels.includes('all');
+            });
+        }
+
+        // Shuffle
         selectedQuestions = selectedQuestions.sort(() => Math.random() - 0.5);
 
         // Slice to count
@@ -50,45 +59,19 @@ export default function Home() {
             selectedQuestions = selectedQuestions.slice(0, config.questionCount);
         }
 
+        if (selectedQuestions.length === 0) {
+            alert("条件に一致する問題がありませんでした。設定を変更してください。");
+            return;
+        }
+
         setGameQuestions(selectedQuestions);
         setView('game');
     };
 
     const handleGameComplete = () => {
-        // Results are already saved by QuizGame before calling this?
-        // Actually QuizGame saves results. We just need to load them or pass them?
-        // QuizGame state for results is internal. It should probably pass them up.
-        // Let's modify QuizGame in thought? No, I can't modify it easily now.
-        // Check QuizGame again. It saves to storage.
-        // ResultView needs the specific results of *this* session?
-        // Yes. QuizGame logic:
-        // useEffect(() => { if (results.length === questions.length) saveQuizResult(results); }, ...);
-        // onComplete is called.
-
-        // I need the results in parent to show them in ResultView.
-        // I'll assume I can't get them easily without modifying QuizGame to pass them to onComplete.
-        // Let's do that quickly.
-
-        // Wait, I can just not pass results to ResultView for now and retrieve them?
-        // No, 'lastGameResults' needs to be in memory. 
-        // I will modify QuizGame to pass results to onComplete.
-        // But first let's build the Home structure. 
-
-        // I will modify QuizGame to accept onComplete that takes results.
-        // But wait, QuizGame handles `saveQuizResult`.
-        // I'll stick to the plan: Modify QuizGame slightly to pass results back.
-
-        // Actually, let's write `page.tsx` first, and if I need to change `QuizGame.tsx`, I will.
-        // I'll add `onComplete` to accept results in `page.tsx`.
-
-        // For now, let's implement the Home view.
+        // Results are handled by QuizGame and passed to onComplete.
         setView('result');
     };
-
-    // Re-reading QuizGame: it doesn't pass results to onComplete.
-    // I will use a trick or just update QuizGame. Updating QuizGame is better.
-    // I will update QuizGame in the next turn if needed.
-    // For now let's implement `page.tsx` assuming `onComplete` receives `results`.
 
     const correctRate = stats && stats.totalAttempts > 0
         ? Math.round((stats.totalCorrect / stats.totalAttempts) * 100)
@@ -151,10 +134,10 @@ export default function Home() {
                         <Activity className="text-primary w-10 h-10" />
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-                        感染認定看護師<br className="md:hidden" />対策ドリル
+                        北5病棟<br className="md:hidden" />新人看護師必修問題集
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        CDCガイドライン・基礎から学ぶ医療関連感染対策準拠
+                        基礎看護技術から病棟業務まで - 継続的な学習をサポート
                     </p>
                 </header>
 

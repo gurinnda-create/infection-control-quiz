@@ -1,5 +1,7 @@
 "use client";
 
+export type TargetLevel = 'beginner' | 'mid' | 'transfer' | 'all';
+
 export type Question = {
   id: number;
   category: string;
@@ -8,6 +10,8 @@ export type Question = {
   correctAnswerIndex: number;
   explanation: string;
   reference: string;
+  targetLevels?: TargetLevel[];
+  imageUrl?: string;
 };
 
 export type QuizResult = {
@@ -28,7 +32,7 @@ export const saveQuizResult = (results: QuizResult[]) => {
   if (typeof window === 'undefined') return;
 
   const currentStats = getStats();
-  
+
   results.forEach(result => {
     currentStats.totalAttempts += 1;
     if (result.isCorrect) {

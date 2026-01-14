@@ -85,10 +85,23 @@ const QuizGame: React.FC<QuizGameProps> = ({ questions, onComplete, onExit }) =>
             </div>
 
             {/* Question Card */}
-            <div className="glass-panel p-8 rounded-3xl shadow-sm mb-6 border-l-4 border-l-primary/50">
-                <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold mb-4">
+            <div className="glass-panel p-6 md:p-8 rounded-3xl shadow-sm mb-6 border-l-4 border-l-primary/50">
+                <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-bold mb-4 border border-primary/20">
                     {currentQuestion.category}
                 </span>
+
+                {/* Image Display */}
+                {currentQuestion.imageUrl && (
+                    <div className="mb-6 rounded-xl overflow-hidden border border-border bg-white flex justify-center items-center">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={currentQuestion.imageUrl}
+                            alt="Question Image"
+                            className="max-h-64 md:max-h-80 w-auto object-contain p-2"
+                        />
+                    </div>
+                )}
+
                 <h2 className="text-xl md:text-2xl font-bold leading-relaxed text-foreground">
                     {currentQuestion.question}
                 </h2>
