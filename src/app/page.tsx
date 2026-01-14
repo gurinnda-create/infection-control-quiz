@@ -134,10 +134,10 @@ export default function Home() {
                         <Activity className="text-primary w-10 h-10" />
                     </div>
                     <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-                        北5病棟<br className="md:hidden" />新人看護師必修問題集
+                        感染認定看護師<br className="md:hidden" />対策ドリル
                     </h1>
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                        基礎看護技術から病棟業務まで - 継続的な学習をサポート
+                        CDCガイドライン・基礎から学ぶ医療関連感染対策準拠
                     </p>
                 </header>
 
